@@ -1,11 +1,9 @@
 const routes = require('express').Router();
 
-// const {  } = require('../controllers/');
+const { createPeople } = require('../controllers/peopleControllers');
 
 routes.post(
-  '/', (req, res) => {
-    res.send('POST people');
-  }
-);
+  '/', createPeople,
+)
 
 module.exports = routes;
