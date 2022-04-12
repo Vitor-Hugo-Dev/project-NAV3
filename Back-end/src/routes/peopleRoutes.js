@@ -1,6 +1,11 @@
 const routes = require('express').Router();
 
-const { createPeople, getPeoples, getPeopleById } = require('../controllers/peopleControllers');
+const {
+  createPeople,
+  getPeoples,
+  getPeopleById,
+  getPeopleByCpf,
+} = require('../controllers/peopleControllers');
 
 routes.post(
   '/', createPeople,
@@ -12,6 +17,10 @@ routes.get(
 
 routes.get(
   '/:id', getPeopleById,
+)
+
+routes.post(
+  '/cpf', getPeopleByCpf,
 )
 
 module.exports = routes;
