@@ -18,4 +18,14 @@ module.exports = {
       throw new Error(error);
     }
   },
-}
+
+  getPeople: async () => {
+    try {
+      const peoples = await People.findAll();
+
+      return peoples;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+ }
