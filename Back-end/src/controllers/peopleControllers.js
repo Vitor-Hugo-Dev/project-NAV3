@@ -1,4 +1,4 @@
-const { createPeople, getPeoples, getPeopleById } = require('../services/peopleServices');
+const { createPeople, getPeoples, getPeopleById, getPeopleByCpf } = require('../services/peopleServices');
 const { success, notFound } = require('../utils/statusCode');
 
 module.exports = {
@@ -37,9 +37,25 @@ module.exports = {
       
       if (people) return res.status(success).json(people); 
 
-      return res.status(notFound).end();
+      return res.status(notFound).message({ message: 'Pessoa não encontrada' });
     } catch(error) {
       return next(error);
     }
-  }
+  },
+
+  getPeopleByCpf: async (req, res, next) => {
+    // precisa validar o Token
+    const { cpf } = req.body;
+
+    try {
+      const people = await getPeopleByCpf(cpf);
+      console.log(people);
+
+      if (people) return res.status(success).json(people);
+
+      return res.status(notFound).json({ message: 'Pessoa não encontrada' });
+    } catch (error) {
+      return next(error);
+    }
+  },
 }

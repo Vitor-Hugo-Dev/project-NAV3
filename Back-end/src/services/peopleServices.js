@@ -37,5 +37,15 @@ module.exports = {
     } catch (error) {
       throw new Error(error);
     }
-  }
+  },
+
+  getPeopleByCpf: async (cpf) => {
+    try {
+      const people = await People.findOne({ where: { cpf: cpf } });
+
+      return people;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
  }
