@@ -28,4 +28,14 @@ module.exports = {
       throw new Error(error);
     }
   },
+
+  getPeopleById: async (id) => {
+    try {
+      const people = await People.findByPk(id);
+
+      return people;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
  }

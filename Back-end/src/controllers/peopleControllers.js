@@ -1,5 +1,5 @@
-const { createPeople, getPeoples } = require('../services/peopleServices');
-const { success } = require('../utils/statusCode');
+const { createPeople, getPeoples, getPeopleById } = require('../services/peopleServices');
+const { success, notFound } = require('../utils/statusCode');
 
 module.exports = {
   createPeople: async (req, res, next) => {
@@ -27,4 +27,19 @@ module.exports = {
       return next(error);
     }
   },
+
+  getPeopleById: async (req, res, next) => {
+    // precisa validar o Token
+    const { id } = req.params;
+
+    try {
+      const people = await getPeopleById(id);
+      
+      if (people) return res.status(success).json(people); 
+
+      return res.status(notFound).end();
+    } catch(error) {
+      return next(error);
+    }
+  }
 }
