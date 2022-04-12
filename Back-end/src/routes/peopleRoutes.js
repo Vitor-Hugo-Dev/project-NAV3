@@ -1,9 +1,13 @@
 const routes = require('express').Router();
 
-const { createPeople } = require('../controllers/peopleControllers');
+const { createPeople, getPeoples } = require('../controllers/peopleControllers');
 
 routes.post(
   '/', createPeople,
+)
+
+routes.get(
+  '/', getPeoples,
 )
 
 module.exports = routes;

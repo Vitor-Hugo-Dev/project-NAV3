@@ -19,7 +19,7 @@ module.exports = {
     }
   },
 
-  getPeople: async () => {
+  getPeoples: async () => {
     try {
       const peoples = await People.findAll();
 
