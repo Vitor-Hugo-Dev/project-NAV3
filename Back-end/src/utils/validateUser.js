@@ -32,6 +32,5 @@ module.exports = {
     const currentUser = await User.findOne({ where: { email: user.email } });
 
     if (currentUser) throw errorHandler(badRequest, 'Usuário já existe');
-
   },
 }
