@@ -1,11 +1,10 @@
 const routes = require('express').Router();
 
-// const {  } = require('../controllers/');
+const { loginControler } = require('../controllers/loginControllers');
 
 routes.post(
-  '/', (req, res) => {
-    res.send('POST people');
-  }
+  '/',
+  loginControler,
 );
 
 module.exports = routes;

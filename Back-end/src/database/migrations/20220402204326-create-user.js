@@ -7,7 +7,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      login: {
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      email: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -15,13 +19,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+      role: {
+        type: Sequelize.STRING,
+        allowNull: false
       }
     });
   },
