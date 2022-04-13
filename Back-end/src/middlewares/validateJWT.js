@@ -5,7 +5,7 @@ const { User } = require('../database/models');
 
 require('dotenv').config();
 
-const secret = process.env.SECRET || 'secret_key';
+const secret = process.env.SECRET;
 module.exports = async (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
