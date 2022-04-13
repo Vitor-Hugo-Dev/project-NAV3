@@ -1,7 +1,7 @@
 const { People } = require('../database/models');
 const { peopleValidation } = require('../utils/peopleValidation');
 const errorHandler = require('../utils/errorHandler');
-const { badRequest } = require('../utils/statusCode');
+const { badRequest, serverError } = require('../utils/statusCode');
 
 module.exports = {
   createPeople: async ({ fullName, cpf, birthDate }) => {
@@ -15,7 +15,7 @@ module.exports = {
 
       return createPeople.dataValues;
     } catch (error) {
-      throw new Error(error);
+      throw errorHandler(badRequest, error.message);
     }
   },
 
@@ -25,7 +25,7 @@ module.exports = {
 
       return peoples;
     } catch (error) {
-      throw new Error(error);
+      throw errorHandler(serverError, error.message);
     }
   },
 
@@ -35,7 +35,7 @@ module.exports = {
 
       return people;
     } catch (error) {
-      throw new Error(error);
+      throw errorHandler(serverError, error.message);
     }
   },
 
@@ -45,7 +45,7 @@ module.exports = {
 
       return people;
     } catch (error) {
-      throw new Error(error);
+      throw errorHandler(serverError, error.message);
     }
   },
  }

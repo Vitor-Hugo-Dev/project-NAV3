@@ -37,7 +37,7 @@ module.exports = {
       
       if (people) return res.status(success).json(people); 
 
-      return res.status(notFound).message({ message: 'Pessoa não encontrada' });
+      return res.status(notFound).json({ message: 'Pessoa não encontrada' });
     } catch(error) {
       return next(error);
     }
