@@ -1,24 +1,21 @@
 const { User } = require('../database/models');
-const Joi = require('joi');
 const errorHandler = require("../utils/errorHandler");
 const { badRequest } = require("../utils/statusCode");
-
-const schema = Joi.object({
-  login: Joi.string().min(5).required(),
-  password: Joi.string().min(8).required(),
-});
-
+const { userCreateValidation } = require('../utils/validateUser');
 module.exports = {
-  createUserService: async (user) => {
-    const { error } = schema.validate(user);
+  createUserService: async (user, creatorToken) => {
+    const { role } = creatorToken;
 
-    if (error) throw errorHandler(badRequest, error.message);
+    if (role !== 'admin')
+      throw errorHandler(
+        badRequest,
+        'Apenas administradores podem criar usuários',
+      );
 
-    const currentuser = await User.create({...user});
+    await userCreateValidation(user);
 
-    return currentuser;
+    const userCreate = await User.create(user);
+
+    return userCreate;
   },
-  updateUserService: async (user, id) => {
-
-  }
-}
+};

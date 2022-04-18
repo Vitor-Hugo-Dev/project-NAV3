@@ -5,10 +5,10 @@ module.exports = {
   createUserController: async (req, res, next) => {
     try {
       const user = req.body;
+      const tokenCreator = req.user;
+      const userCreator = await createUserService(user, tokenCreator);
 
-      const createUser = await createUserService(user);
-
-      return res.status(success).json(createUser);
+      return res.status(success).json(userCreator);
     } catch (err) {
       return next(err);
     }
