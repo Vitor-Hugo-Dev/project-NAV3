@@ -1,6 +1,6 @@
 const { User } = require('../database/models');
-const errorHandler = require("../utils/errorHandler");
-const { badRequest } = require("../utils/statusCode");
+const errorHandler = require('../utils/errorHandler');
+const { badRequest } = require('../utils/statusCode');
 const { userCreateValidation } = require('../utils/validateUser');
 module.exports = {
   createUserService: async (user, creatorToken) => {
