@@ -1,5 +1,5 @@
 const routes = require('express').Router();
-
+const validateJWT = require('../middlewares/validateJWT');
 const {
   createPeople,
   getPeoples,
@@ -8,19 +8,19 @@ const {
 } = require('../controllers/peopleControllers');
 
 routes.post(
-  '/', createPeople,
+  '/', validateJWT, createPeople,
 )
 
 routes.get(
-  '/', getPeoples,
+  '/', validateJWT, getPeoples,
 )
 
 routes.get(
-  '/:id', getPeopleById,
+  '/:id', validateJWT, getPeopleById,
 )
 
 routes.post(
-  '/cpf', getPeopleByCpf,
+  '/cpf', validateJWT, getPeopleByCpf,
 )
 
 module.exports = routes;

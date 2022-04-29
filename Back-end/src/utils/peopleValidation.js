@@ -4,30 +4,26 @@ const errorHandler = require('../utils/errorHandler');
 const { badRequest } = require('../utils/statusCode');
 
 const peopleValidation = (peopleData) => {
-
   const isRegistered = People.findOne({
-    where: { cpf: peopleData.cpf }
+    where: { cpf: peopleData.cpf },
   });
 
-  if (isRegistered) throw errorHandler(badRequest, `Pessoa já cadastrada!`);
+  if (isRegistered) throw errorHandler(badRequest, 'Pessoa já cadastrada!');
 
   const schema = Joi.object({
-    fullName: Joi.string()
-      .min(10)
-      .required(),
+    fullName: Joi.string().min(10).required(),
 
     cpf: Joi.string()
       .length(11)
       .pattern(/^[0-9]{3}.?[0-9]{3}.?[0-9]{3}-?[0-9]{2}/)
       .required(),
 
-    birthDate: Joi.string()
-    .required(),
+    birthDate: Joi.string().required(),
   }).options({ abortEarly: false });
 
   return schema.validate(peopleData);
-}
+};
 
 module.exports = {
   peopleValidation,
-}
+};
