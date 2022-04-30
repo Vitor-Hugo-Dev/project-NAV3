@@ -7,20 +7,12 @@ const {
   getPeopleByCpf,
 } = require('../controllers/peopleControllers');
 
-routes.post(
-  '/', validateJWT, createPeople,
-)
+routes.post('/', validateJWT, createPeople);
 
-routes.get(
-  '/', validateJWT, getPeoples,
-)
+routes.get('/', validateJWT, getPeoples);
 
-routes.get(
-  '/:id', validateJWT, getPeopleById,
-)
+routes.get('/cpf', validateJWT, getPeopleByCpf);
 
-routes.post(
-  '/cpf', validateJWT, getPeopleByCpf,
-)
+routes.get('/:id', validateJWT, getPeopleById);
 
 module.exports = routes;

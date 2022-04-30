@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
       fullName: { type: DataTypes.STRING, allowNull: false },
       cpf: { type: DataTypes.STRING, allowNull: false },
       birthDate: { type: DataTypes.STRING, allowNull: false },
-      status: { type: DataTypes.STRING, allowNull: false },
     },
     {
       tableName: 'peoples',
