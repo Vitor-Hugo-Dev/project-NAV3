@@ -1,0 +1,111 @@
+.defaultModal {
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(71, 77, 87, 0.698);
+  position: fixed;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+}
+
+.headline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0.1rem solid var(--gray-5);
+  position: relative;
+  min-height: 7.5rem;
+  padding: 0 2.4rem;
+}
+
+.windowTitle {
+  font-weight: 500;
+  line-height: 2rem;
+  font-size: 1.4rem;
+}
+
+.buttonHide {
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.iconClose {
+  color: var(--text);
+}
+
+.body {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2.4rem 3.2rem 3.4rem;
+}
+
+.body::-webkit-scrollbar-track {
+  background: var(--gray-5);
+  border-radius: 50%;
+}
+
+.body::-webkit-scrollbar {
+  width: 0.9rem;
+  height: 0;
+  scrollbar-width: 0.9rem;
+  background: var(--gray-5);
+  border-radius: 0 0 50% 50%;
+}
+
+.body::-webkit-scrollbar-thumb {
+  border-radius: 10rem;
+  background: var(--gray-4);
+}
+
+.form {
+  width: 100%;
+  height: 100%;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+  .body {
+    padding: 3.2rem 1.6rem;
+  }
+}
+
+@media (max-height: 612px) {
+  .content {
+    max-height: 55rem;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .content {
+    height: 55rem;
+    max-width: 56rem;
+    border-radius: 0.8rem;
+  }
+
+  .headline {
+    border-radius: 0.8rem 0.8rem 0rem 0rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .content {
+    height: 67rem;
+  }
+}

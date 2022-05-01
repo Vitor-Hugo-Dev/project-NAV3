@@ -1,0 +1,66 @@
+.container {
+  padding: 0 2rem;
+}
+
+.main {
+  height: 100vh;
+  max-width: 60rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerLogo {
+  margin: 3rem 0;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 18rem;
+  width: 80%;
+}
+
+.input {
+  width: 100%;
+  height: 4rem;
+  border-radius: 0.5rem;
+  border: 0.1rem solid #ccc;
+  padding: 0 1rem;
+  font-size: 1.5rem;
+  outline: none;
+}
+
+.errorMessage {
+  color: var(--red);
+  font-size: 1.5rem;
+}
+
+.button {
+  width: 100%;
+  height: 4rem;
+  border-radius: 0.5rem;
+  border: 0.1rem solid #ccc;
+  background-color: var(--gray-1);
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  outline: none;
+  transition: 0.5s;
+}
+
+.button:enabled {
+  background-color: var(--green);
+}
+
+.changePasswordLink {
+  margin-top: 1.5rem;
+  font-size: 1.5rem;
+  color: var(--text);
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.5s;
+}
