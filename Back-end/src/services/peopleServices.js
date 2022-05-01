@@ -76,4 +76,20 @@ module.exports = {
       throw errorHandler(error.status, error.message);
     }
   },
+  getDebtorPeoples: async () => {
+    try {
+      const peoples = await People.findAll({
+        include: [
+          {
+            model: Address,
+            as: 'address',
+          },
+        ],
+      });
+
+      return peoples;
+    } catch (error) {
+      throw errorHandler(serverError, error.message);
+    }
+  },
 };

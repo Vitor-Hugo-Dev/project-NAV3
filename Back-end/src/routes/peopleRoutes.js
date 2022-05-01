@@ -5,11 +5,14 @@ const {
   getPeoples,
   getPeopleById,
   getPeopleByCpf,
+  getDebtorPeoples,
 } = require('../controllers/peopleControllers');
 
 routes.post('/', validateJWT, createPeople);
 
 routes.get('/', validateJWT, getPeoples);
+
+routes.get('/debtor', validateJWT, getDebtorPeoples);
 
 routes.get('/cpf', validateJWT, getPeopleByCpf);
 

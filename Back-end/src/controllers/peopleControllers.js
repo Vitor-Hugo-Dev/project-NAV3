@@ -3,6 +3,7 @@ const {
   getPeoples,
   getPeopleById,
   getPeopleByCpf,
+  getDebtorPeoples,
 } = require('../services/peopleServices');
 const { success } = require('../utils/statusCode');
 
@@ -48,6 +49,15 @@ module.exports = {
       const people = await getPeopleByCpf(cpf);
 
       return res.status(success).json(people);
+    } catch (error) {
+      return next(error);
+    }
+  },
+  getDebtorPeoples: async (req, res, next) => {
+    try {
+      const debtorPeoples = await getDebtorPeoples();
+
+      return res.status(success).json(debtorPeoples);
     } catch (error) {
       return next(error);
     }
