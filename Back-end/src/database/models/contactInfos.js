@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const contactInfos = sequelize.define('contactInfos', {
+  const ContactInfos = sequelize.define('ContactInfos', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -22,11 +22,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
-  contactInfos.associate = (models) => {
-    contactInfos.belongsTo(models.People, {
+  ContactInfos.associate = (models) => {
+    ContactInfos.belongsTo(models.People, {
       foreignKey: 'peopleId',
       as: 'people',
     });
   };
-  return contactInfos;
+  return ContactInfos;
 };
