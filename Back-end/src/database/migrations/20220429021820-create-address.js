@@ -1,16 +1,12 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('payments', {
+    await queryInterface.createTable('addresses', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-      },
-      value: {
-        allowNull: false,
-        type: Sequelize.STRING,
       },
       peopleId: {
         allowNull: false,
@@ -21,20 +17,13 @@ module.exports = {
           key: 'id',
         },
       },
-      createdAt: {
-        allowNull: false,
-        field: 'paymentDate',
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('now'),
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('now'),
-      },
+      district: { type: Sequelize.STRING, allowNull: false },
+      street: { type: Sequelize.STRING, allowNull: false },
+      number: { type: Sequelize.INTEGER, allowNull: false },
+      complement: { type: Sequelize.STRING, allowNull: false },
     });
   },
   down: async (queryInterface, _Sequelize) => {
-    await queryInterface.dropTable('payments');
+    await queryInterface.dropTable('addresses');
   },
 };

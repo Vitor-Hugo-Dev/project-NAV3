@@ -1,0 +1,88 @@
+:root {
+  --primary: #55338a;
+  --primary-dark: #3d2563;
+  --blue: #00a0c6;
+  --blue-2: #00456e;
+  --blue-light: #ebf7fa;
+  --dark-blue: #006076;
+  --red: #c90000;
+  --text: #474d57;
+  --orange: #ffad1c;
+  --orange-2: #fbc946;
+  --yellow: #fabb18;
+  --yellow-2: #f5bb18;
+  --white: #ffffff;
+  --black: #000000;
+  --dark: #141414;
+  --dark-2: #19212d;
+  --dark-3: #0d0d0d;
+  --green: #24ac57;
+  --green-2: #31dd71;
+  --gray-1: #a3a6ab;
+  --gray-2: #6c7179;
+  --gray-3: #f8f8f9;
+  --gray-4: #c8cacd;
+  --gray-5: #ecedef;
+  --gray-6: #f1eff6;
+  --gray-7: #414b5a;
+  --gray-24: #c8cacd;
+  --gray-40: #a3a6ab;
+  --gray-64: #6c7179;
+  --gray-80: #474d57;
+  --gray-85: #555555;
+  --gray-90: #393939;
+  --gray-100: #19212d;
+  --primary-gradient: linear-gradient(267.17deg, #484293 2.35%, #55338a 98.84%);
+  --scrollbar-background: transparent;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+html,
+body,
+p,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+blockquote,
+figure,
+fieldset,
+legend,
+textarea,
+pre,
+iframe,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}

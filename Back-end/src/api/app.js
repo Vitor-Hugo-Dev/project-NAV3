@@ -3,7 +3,7 @@ const express = require('express');
 const peopleRoutes = require('../routes/peopleRoutes');
 const paymentRoutes = require('../routes/paymentRoutes');
 const userRoutes = require('../routes/userRoutes');
-const errorMiddleware = require("../middlewares/errorMiddleware");
+const errorMiddleware = require('../middlewares/errorMiddleware');
 const loginRoutes = require('../routes/loginRoutes');
 const app = express();
 
