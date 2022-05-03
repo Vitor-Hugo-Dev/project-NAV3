@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import Image from "next/image";
-import logo from "../public/logo.png";
-import { useDialogState } from "reakit/Dialog";
-import DefaultModal from "../components/DefaultModal";
+import React, { useState } from 'react';
+import Image from 'next/image';
+import logo from '../public/logo.png';
+import { useDialogState } from 'reakit/Dialog';
+import DefaultModal from '../components/DefaultModal';
 
-import styles from "../styles/Home.module.css";
-import FormSearchData from "../components/FormSearchData";
+import styles from '../styles/Home.module.css';
+import FormSearchData from '../components/FormSearchData';
 
 export default function Home() {
   const modal = useDialogState();
@@ -14,7 +14,7 @@ export default function Home() {
   const handleModal = () => {
     modal.show();
   };
-
+  // push to next page
   return (
     <div className={styles.container}>
       <header className={styles.header}>
