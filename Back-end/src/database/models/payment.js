@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         foreignKey: true,
         field: 'peopleId',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
     },
     {
