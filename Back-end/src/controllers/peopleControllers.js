@@ -75,7 +75,7 @@ module.exports = {
       return next(error);
     }
   },
-  dinamicGetPeoplesController: async (req, res, next) => {
+  dynamicGetPeoplesController: async (req, res, next) => {
     const { role, termo } = req.body;
     try {
       if (role === 'cpf') {

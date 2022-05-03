@@ -7,7 +7,7 @@ const {
   getPeopleByCpfController,
   getDebtorPeoplesController,
   deletePeopleController,
-  dinamicGetPeoplesController,
+  dynamicGetPeoplesController,
 } = require('../controllers/peopleControllers');
 
 routes.post('/', validateJWT, createPeopleController);
@@ -18,7 +18,7 @@ routes.get('/debtor', validateJWT, getDebtorPeoplesController);
 
 routes.get('/cpf', validateJWT, getPeopleByCpfController);
 
-routes.get('/role', validateJWT, dinamicGetPeoplesController);
+routes.get('/role', validateJWT, dynamicGetPeoplesController);
 
 routes.get('/:id', validateJWT, getPeopleByIdController);
 

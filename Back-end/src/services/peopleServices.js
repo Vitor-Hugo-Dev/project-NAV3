@@ -4,9 +4,10 @@ const { validateAddress } = require('../utils/addressValidation');
 const errorHandler = require('../utils/errorHandler');
 const { badRequest, serverError, notFound } = require('../utils/statusCode');
 const { createAddress } = require('./addressServices');
+const { Op } = require('sequelize');
 
 module.exports = {
-  createPeople: async (personalData, addressData) => {
+  createPeopleService: async (personalData, addressData) => {
     const { error: personalError } = await peopleValidation(personalData);
     const { error: addressError } = validateAddress(addressData);
 
@@ -28,7 +29,7 @@ module.exports = {
     }
   },
 
-  getPeoples: async () => {
+  getPeoplesService: async () => {
     try {
       const peoples = await People.findAll({
         include: [
@@ -45,7 +46,7 @@ module.exports = {
     }
   },
 
-  getPeopleById: async (id) => {
+  getPeopleByIdService: async (id) => {
     try {
       const people = await People.findByPk(id, {
         include: [
@@ -62,7 +63,7 @@ module.exports = {
       throw errorHandler(error.status, error.message);
     }
   },
-  getPeopleByCpf: async (cpf) => {
+  getPeopleByCpfService: async (cpf) => {
     try {
       const people = await People.findOne({
         where: { cpf: cpf },
@@ -75,7 +76,29 @@ module.exports = {
       throw errorHandler(error.status, error.message);
     }
   },
-  getDebtorPeoples: async () => {
+  getPeoplesByPartNameService: async (partName) => {
+    try {
+      const peoples = await People.findAll({
+        where: {
+          fullName: {
+            [Op.like]: `%${partName}%`, // https://github.com/tryber/Trybe-CheatSheets/tree/master/backend/sequelize/queries#operadores
+          },
+        },
+        include: [
+          {
+            model: Address,
+            as: 'address',
+          },
+        ],
+      });
+
+      return peoples;
+    } catch (error) {
+      throw errorHandler(serverError, error.message);
+    }
+  },
+
+  getDebtorPeoplesService: async () => {
     try {
       const peoples = await People.findAll({
         include: [
