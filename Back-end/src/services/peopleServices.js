@@ -62,7 +62,6 @@ module.exports = {
       throw errorHandler(error.status, error.message);
     }
   },
-
   getPeopleByCpf: async (cpf) => {
     try {
       const people = await People.findOne({
@@ -90,6 +89,15 @@ module.exports = {
       return peoples;
     } catch (error) {
       throw errorHandler(serverError, error.message);
+    }
+  },
+  deletePeopleService: async (id) => {
+    try {
+      const people = await People.findByPk(id); //busca a pessoa.
+      if (!people) throw errorHandler(notFound, 'Pessoa não encontrada'); //se não encontrar, retorna erro.
+      people.destroy(); //caso exista, é deletada. (verificar se o cascade está funcionando))
+    } catch (err) {
+      throw errorHandler(notFound, err.message);
     }
   },
 };

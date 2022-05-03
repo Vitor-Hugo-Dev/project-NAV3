@@ -4,6 +4,7 @@ const {
   getPeopleById,
   getPeopleByCpf,
   getDebtorPeoples,
+  deletePeopleService,
 } = require('../services/peopleServices');
 const { success } = require('../utils/statusCode');
 
@@ -58,6 +59,16 @@ module.exports = {
       const debtorPeoples = await getDebtorPeoples();
 
       return res.status(success).json(debtorPeoples);
+    } catch (error) {
+      return next(error);
+    }
+  },
+  deletePeopleController: async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      await deletePeopleService(id);
+      console.log('deletou');
+      return res.status(success).json({ message: 'Deletado com sucesso' });
     } catch (error) {
       return next(error);
     }
