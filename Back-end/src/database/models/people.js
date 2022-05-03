@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   People.associate = (models) => {
     People.hasMany(models.Payment, { foreignKey: 'peopleId', as: 'payments' });
     People.hasOne(models.Address, { foreignKey: 'peopleId', as: 'address' });
-    People.hasOne(models.contactInfos, {
+    People.hasOne(models.ContactInfos, {
       foreignKey: 'peopleId',
       as: 'contacts',
     });
