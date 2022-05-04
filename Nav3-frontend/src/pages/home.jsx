@@ -6,9 +6,11 @@ import DefaultModal from '../components/DefaultModal';
 
 import styles from '../styles/Home.module.css';
 import FormSearchData from '../components/FormSearchData';
+import FormPeople from '../components/FormPeople';
 
 export default function Home() {
   const modal = useDialogState();
+  const formModal = useDialogState();
   const [peopleData, setPeopleData] = useState({});
 
   const handleModal = () => {
@@ -32,9 +34,20 @@ export default function Home() {
       </header>
       <main className={styles.mainContainer}>
         <div className={styles.optionsCard}>
-          <span className={styles.cardRole}>Listar Pessoas</span>
+          <button
+            type="button"
+            className={styles.button}
+            onClick={() => formModal.show()}
+          >
+            Cadastrar uma Pessoa
+          </button>
         </div>
       </main>
+      {formModal.visible && (
+        <DefaultModal modal={formModal} windowTitle="Cadastre uma Pessoa">
+          <FormPeople />
+        </DefaultModal>
+      )}
       {modal.visible && (
         <DefaultModal modal={modal} windowTitle="Faça sua busca">
           <>
