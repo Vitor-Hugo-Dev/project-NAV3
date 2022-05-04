@@ -1,4 +1,4 @@
-const { People, Address } = require('../database/models');
+const { People, Address, Payment } = require('../database/models');
 const { peopleValidation } = require('../utils/peopleValidation');
 const { validateAddress } = require('../utils/addressValidation');
 const errorHandler = require('../utils/errorHandler');
@@ -37,6 +37,10 @@ module.exports = {
             model: Address,
             as: 'address',
           },
+          {
+            model: Payment,
+            as: 'payments',
+          },
         ],
       });
 
@@ -54,6 +58,10 @@ module.exports = {
             model: Address,
             as: 'address',
           },
+          {
+            model: Payment,
+            as: 'payments',
+          },
         ],
       });
       if (!people) throw errorHandler(notFound, 'Pessoa não encontrada');
@@ -67,10 +75,16 @@ module.exports = {
     try {
       const people = await People.findOne({
         where: { cpf: cpf },
-        include: [{ model: Address, as: 'address' }],
+        include: [
+          { model: Address, as: 'address' },
+          {
+            model: Payment,
+            as: 'payments',
+          },
+        ],
       });
       if (!people) throw errorHandler(notFound, 'Pessoa não encontrada');
-
+      console.log(JSON.stringify(people.dataValues.payments[0]));
       return people;
     } catch (error) {
       throw errorHandler(error.status, error.message);
@@ -88,6 +102,10 @@ module.exports = {
           {
             model: Address,
             as: 'address',
+          },
+          {
+            model: Payment,
+            as: 'payments',
           },
         ],
       });
