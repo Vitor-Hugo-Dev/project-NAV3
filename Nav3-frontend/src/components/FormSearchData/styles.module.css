@@ -11,7 +11,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 18rem;
+  height: 15rem;
 }
 
 .labelSelect {
@@ -58,10 +58,35 @@
 
 .containerResults {
   width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.containerUser {
+  width: 100%;
+  padding: 0.5rem;
+  display: flex;
+  margin-bottom: 1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border: 1px solid var(--text-align);
+  border-radius: 0.5rem;
+  outline: none;
+  background-color: var(--gray-6);
+}
+
+.containerUser span {
+  margin-bottom: 0.5rem;
+}
+
+.userAndress {
+  font-size: 1rem;
 }
 
 .button {
-  height: 4rem;
+  margin-top: 1rem;
+  height: 6rem;
   border-radius: 0.5rem;
   border: none;
   outline: none;
@@ -71,4 +96,10 @@
 .button:enabled:hover {
   background-color: var(--gray-1);
   cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .userAndress {
+    font-size: 1.4rem;
+  }
 }
