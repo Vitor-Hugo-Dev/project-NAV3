@@ -52,7 +52,7 @@
   align-items: center;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2.4rem 3.2rem 3.4rem;
+  padding: 2rem 3.2rem 3.4rem;
 }
 
 .body::-webkit-scrollbar-track {
