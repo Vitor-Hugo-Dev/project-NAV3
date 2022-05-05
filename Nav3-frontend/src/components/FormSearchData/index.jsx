@@ -10,6 +10,7 @@ export default function FormSearchData({
   const [selectData, setSelectData] = useState('nome');
   const [enableButton, setEnableButton] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+  const [showResults, setShowResults] = useState(true);
 
   useEffect(() => {
     const handleCpfOrName = () => {
@@ -74,9 +75,57 @@ export default function FormSearchData({
         </div>
       </form>
 
-      <div className={styles.containerResults}>
-
-      </div>
+      {showResults ? (
+        <div className={styles.containerResults}>
+          <button className={styles.containerUser} onClick={() => setShowResults(false)}>
+            <span className={styles.userName}>Nome: Claudio Cassimiro</span>
+            <span className={styles.cpf}>CPF: 704.543.044-20</span>
+            <span className={styles.userAndress}>Endereço: Ipojuca - Nossa Senhora do Ó, Rua 30, loteamento canoas</span>
+          </button>
+          <button className={styles.containerUser} onClick={() => setShowResults(false)}>
+            <span className={styles.userName}>Nome: Claudio Cassimiro</span>
+            <span className={styles.cpf}>CPF: 704.543.044-20</span>
+            <span className={styles.userAndress}>Endereço: Ipojuca - Nossa Senhora do Ó, Rua 30, loteamento canoas</span>
+          </button>
+          <button className={styles.containerUser} onClick={() => setShowResults(false)}>
+            <span className={styles.userName}>Nome: Claudio Cassimiro</span>
+            <span className={styles.cpf}>CPF: 704.543.044-20</span>
+            <span className={styles.userAndress}>Endereço: Ipojuca - Nossa Senhora do Ó, Rua 30, loteamento canoas</span>
+          </button>
+          <button className={styles.containerUser} onClick={() => setShowResults(false)}>
+            <span className={styles.userName}>Nome: Claudio Cassimiro</span>
+            <span className={styles.cpf}>CPF: 704.543.044-20</span>
+            <span className={styles.userAndress}>Endereço: Ipojuca - Nossa Senhora do Ó, Rua 30, loteamento canoas</span>
+          </button>
+          <button className={styles.containerUser} onClick={() => setShowResults(false)}>
+            <span className={styles.userName}>Nome: Claudio Cassimiro</span>
+            <span className={styles.cpf}>CPF: 704.543.044-20</span>
+            <span className={styles.userAndress}>Endereço: Ipojuca - Nossa Senhora do Ó, Rua 30, loteamento canoas</span>
+          </button>
+          <button className={styles.containerUser} onClick={() => setShowResults(false)}>
+            <span className={styles.userName}>Nome: Claudio Cassimiro</span>
+            <span className={styles.cpf}>CPF: 704.543.044-20</span>
+            <span className={styles.userAndress}>Endereço: Ipojuca - Nossa Senhora do Ó, Rua 30, loteamento canoas</span>
+          </button>
+          <button className={styles.containerUser} onClick={() => setShowResults(false)}>
+            <span className={styles.userName}>Nome: Claudio Cassimiro</span>
+            <span className={styles.cpf}>CPF: 704.543.044-20</span>
+            <span className={styles.userAndress}>Endereço: Ipojuca - Nossa Senhora do Ó, Rua 30, loteamento canoas</span>
+          </button>
+          <button className={styles.containerUser} onClick={() => setShowResults(false)}>
+            <span className={styles.userName}>Nome: Claudio Cassimiro</span>
+            <span className={styles.cpf}>CPF: 704.543.044-20</span>
+            <span className={styles.userAndress}>Endereço: Ipojuca - Nossa Senhora do Ó, Rua 30, loteamento canoas</span>
+          </button>
+        </div>
+      ) : (
+        <div className={styles.containerUserInfos}>
+          <button className={styles.backToResults} onClick={() => setShowResults(true)}>
+            Voltar
+          </button>
+          <h1>Informações do usuario aqui</h1>
+        </div>
+      ) }
 
       <button
         type="button"
