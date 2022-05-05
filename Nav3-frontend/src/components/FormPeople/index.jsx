@@ -1,19 +1,8 @@
-import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './styles.module.css';
-
-const regex = {
-  fullName: /\b[A-Za-zÀ-ú][A-Za-zÀ-ú]+,?\s[A-Za-zÀ-ú][A-Za-zÀ-ú]{2,19}\b/gi,
-  cpf: /[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}/,
-  birthDate: /([0-2][0-9]|3[0-1])\/(0[0-9]|1[0-2])\/[0-9]{4}/,
-  phoneNumber: /^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$/,
-  email: /\S+@\S+\.\S+/,
-}
+import regex from '../../regex/';
 
 export default function FormPeople() {
-  // const [enableButton, setEnableButton] = useState(true);
-  const [errorMessage, setErrorMessage] = useState('');
-
   const {
     register,
     handleSubmit,
