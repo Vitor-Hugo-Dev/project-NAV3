@@ -1,9 +1,10 @@
 const routes = require('express').Router();
+const validateJWT = require('../middlewares/validateJWT');
 
-// const {  } = require('../controllers/');
+const {
+  registerPaymentController,
+} = require('../controllers/paymentControllers');
 
-routes.post('/', (req, res) => {
-  res.send('POST people');
-});
+routes.post('/:id', validateJWT, registerPaymentController);
 
 module.exports = routes;
