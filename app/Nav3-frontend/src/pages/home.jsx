@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import logo from '../public/logo.png';
+import logo from '../../public/logo.png';
 import { useDialogState } from 'reakit/Dialog';
 import DefaultModal from '../components/DefaultModal';
 
