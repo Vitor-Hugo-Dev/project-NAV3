@@ -1,5 +1,5 @@
 const { loginServices } = require('../services/loginServices');
-const { success } = require("../utils/statusCode");
+const { success } = require('../utils/statusCode');
 
 module.exports = {
   loginControler: async (req, res, next) => {
