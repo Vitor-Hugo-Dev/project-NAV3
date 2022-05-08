@@ -1,5 +1,39 @@
 version: '3.9'
 services:
+  frontend:
+    build: ./Nav3-frontend
+    container_name: app_frontend
+    restart: always
+    ports:
+      - '3000:3000'
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3000"]
+      timeout: 10s
+      retries: 5
+  backend:
+    build: ./Back-end
+    container_name: app_backend
+    restart: always
+    ports:
+      - '3001:3001'
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=123456
+      - HOSTNAME=db
+      - SECRET=secret
+      - DB_NAME=db_pessoas_ass
+      - PORT=3001
+      - DB_PORT=3306
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3001"]
+      timeout: 10s
+      retries: 5
   db:
     image: mysql:8.0.21
     container_name: db
