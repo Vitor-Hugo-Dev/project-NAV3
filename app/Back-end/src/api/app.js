@@ -9,6 +9,10 @@ const app = express();
 
 app.use(express.json());
 
+app.get('/ping', (_req, res) => {
+  return res.status(200).json({ message: 'pong' });
+});
+
 app.use('/people', peopleRoutes);
 app.use('/payment', paymentRoutes);
 app.use('/user', userRoutes);
