@@ -32,14 +32,15 @@ export default function FormPeople() {
           type="text"
           name="cpf"
           placeholder="CPF da pessoa"
-          {...register('cpf', { required: "Required", pattern: regex.cpf })}
+          {...register('cpf', { required: "Required", pattern: regex.cpf, minLength: 14 })}
         />
 
         {errors.cpf && errors.cpf.type === 'required' && <span className={styles.error}>Esse campo é obrigatório</span>}
+        {errors.cpf && errors.cpf.type === 'minLength' && <span className={styles.error}>CPF inválido, digite o CPF completo</span>}
         {errors.cpf && errors.cpf.type === 'pattern' && 
           <span className={styles.error}
           >
-            Digite o CPF no formato (xxx.xxx.xxx-xx) ou (xxxxxxxxxxx)
+            Digite o CPF no formato (xxx.xxx.xxx-xx)
           </span>}
 
         <input
