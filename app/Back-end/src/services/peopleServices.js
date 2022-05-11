@@ -7,30 +7,51 @@ const { Op } = require('sequelize');
 
 const Sequelize = require('sequelize');
 const config = require('../database/config/config');
+const { createContactInfos } = require('./contactInfosServices');
 const sequelize = new Sequelize(config.development);
 
 module.exports = {
-  createPeopleService: async (personalData, addressData, contactInfos) => {
-    const { error: personalError } = await peopleValidation(personalData); // valida os dados pessoais
+  createPeopleService: async (personalData, addressData, contactInfo) => {
+    const { error } = await peopleValidation(personalData); // valida os dados pessoais
 
-    if (personalError) throw errorHandler(badRequest, personalError.message);
+    if (error) throw errorHandler(badRequest, error.message);
+
+    const transaction = {
+      transaction: await sequelize.transaction(),
+    }; // inicia uma transação
 
     try {
-      const { dataValues: dataPeople } = await People.create(personalData);
+      const { dataValues: dataPeople } = await People.create(
+        personalData,
+        transaction,
+      );
       if (!dataPeople) throw errorHandler(serverError, 'Erro ao criar pessoa');
 
-      const addRess = await createAddress({
-        ...addressData,
-        peopleId: dataPeople.id,
-      });
-      const firstPayment = await Payment.create({
-        peopleId: dataPeople.id,
-        paymentMonth: new Date().getMonth() + 1,
-        value: '5.00',
-      });
-      console.log(firstPayment);
-      return { ...dataPeople, ...addRess };
+      const contact = await createContactInfos(
+        { ...contactInfo, peopleId: dataPeople.id },
+        transaction,
+      );
+
+      const addRess = await createAddress(
+        {
+          ...addressData,
+          peopleId: dataPeople.id,
+        },
+        transaction, // ponto de transação
+      );
+      await Payment.create(
+        {
+          peopleId: dataPeople.id,
+          paymentMonth: new Date().getMonth() + 1,
+          value: '5.00',
+        },
+        transaction,
+      );
+
+      await transaction.transaction.commit(); // commita a transação
+      return { ...dataPeople, ...addRess, ...contact };
     } catch (error) {
+      await transaction.transaction.rollback(); // rollbacka a transação
       throw errorHandler(badRequest, error.message);
     }
   },

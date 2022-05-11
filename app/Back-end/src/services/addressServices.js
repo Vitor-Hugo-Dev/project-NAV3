@@ -4,12 +4,11 @@ const errorHandler = require('../utils/errorHandler');
 const { badRequest } = require('../utils/statusCode');
 
 module.exports = {
-  createAddress: async (address) => {
-    const { error: addressError } = validateAddress(address); // valida os dados de endereço
+  createAddress: async (address, transaction) => {
+    validateAddress(address); // valida os dados de endereço
 
-    if (addressError) throw errorHandler(badRequest, addressError.message);
     try {
-      const { dataValues } = await Address.create(address);
+      const { dataValues } = await Address.create(address, transaction);
       return dataValues;
     } catch (error) {
       throw errorHandler(badRequest, error.message);
