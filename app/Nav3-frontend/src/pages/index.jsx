@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "../styles/Login.module.css";
 import { useState, useEffect, useRef } from "react";
 import logo from "../../public/logo.png";
+import validationEmail from '../utils/validationEmail';
 
 export default function Login() {
   const [inputEmail, setInputEmail] = useState("");
@@ -13,7 +14,7 @@ export default function Login() {
   const emailInput = useRef(null);
 
   useEffect(() => {
-    if (inputEmail.length >= 16 && inputPassword.length >= 8) {
+    if (validationEmail(inputEmail) && inputPassword.length >= 8) {
       setEnableButton(false);
     } else {
       setEnableButton(true);
@@ -29,17 +30,33 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("submit");
 
     const payload = {
       email: inputEmail,
       password: inputPassword,
     };
 
-    // Essa função vai fazer o post dos dados para o backend
-    // tando tudo certo, o token será retornado e o usuário estará logado
-    // depois que o token for salvo no cokie, o usuário será redirecionado para a página inicial
-    // caso as credenciais estejam incorretas, uma mensagem de error será exibida
+    try {
+      const response = await fetch(`http://localhost:3001/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+      if (data.message) {
+        return setErrorMessage(`Email ou senha incorretos`);
+      }
+
+      const { token } = data;
+      window.localStorage.setItem("token", token);
+
+      window.location.href = "/home";
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
