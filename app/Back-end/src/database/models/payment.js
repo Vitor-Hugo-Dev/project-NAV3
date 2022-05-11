@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
+      paymentMonth: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: new Date().getMonth() + 1,
+      },
     },
     {
       timestamps: true,

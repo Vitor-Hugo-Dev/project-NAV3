@@ -15,7 +15,7 @@ const peopleValidation = async (peopleData) => {
       .length(14)
       .pattern(/^[0-9]{3}.?[0-9]{3}.?[0-9]{3}-?[0-9]{2}/)
       .required(),
-    birthDate: Joi.string().required(),
+    birthDate: Joi.string().min(10).required(),
   }).options({ abortEarly: false });
 
   return schema.validate(peopleData);

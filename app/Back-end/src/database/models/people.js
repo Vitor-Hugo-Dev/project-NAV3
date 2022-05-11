@@ -6,6 +6,11 @@ module.exports = (sequelize, DataTypes) => {
       fullName: { type: DataTypes.STRING, allowNull: false },
       cpf: { type: DataTypes.STRING, allowNull: false },
       birthDate: { type: DataTypes.STRING, allowNull: false },
+      paymentMonth: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        defaultValue: new Date().getMonth() + 1,
+      },
     },
     {
       tableName: 'peoples',

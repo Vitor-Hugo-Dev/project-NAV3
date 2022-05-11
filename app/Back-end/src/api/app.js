@@ -5,10 +5,11 @@ const paymentRoutes = require('../routes/paymentRoutes');
 const userRoutes = require('../routes/userRoutes');
 const errorMiddleware = require('../middlewares/errorMiddleware');
 const loginRoutes = require('../routes/loginRoutes');
+const cors = require('cors');
 const app = express();
 
 app.use(express.json());
-
+app.use(cors());
 app.get('/ping', (_req, res) => {
   return res.status(200).json({ message: 'pong' });
 });

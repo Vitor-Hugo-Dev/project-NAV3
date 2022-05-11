@@ -1,28 +1,34 @@
 const { People, Address, Payment } = require('../database/models');
 const { peopleValidation } = require('../utils/peopleValidation');
-const { validateAddress } = require('../utils/addressValidation');
 const errorHandler = require('../utils/errorHandler');
 const { badRequest, serverError, notFound } = require('../utils/statusCode');
 const { createAddress } = require('./addressServices');
 const { Op } = require('sequelize');
 
+const Sequelize = require('sequelize');
+const config = require('../database/config/config');
+const sequelize = new Sequelize(config.development);
+
 module.exports = {
-  createPeopleService: async (personalData, addressData) => {
-    const { error: personalError } = await peopleValidation(personalData);
-    const { error: addressError } = validateAddress(addressData);
+  createPeopleService: async (personalData, addressData, contactInfos) => {
+    const { error: personalError } = await peopleValidation(personalData); // valida os dados pessoais
 
     if (personalError) throw errorHandler(badRequest, personalError.message);
-    if (addressError) throw errorHandler(badRequest, addressError.message);
 
     try {
       const { dataValues: dataPeople } = await People.create(personalData);
-      // console.log('criou pessoa');
       if (!dataPeople) throw errorHandler(serverError, 'Erro ao criar pessoa');
 
       const addRess = await createAddress({
         ...addressData,
         peopleId: dataPeople.id,
       });
+      const firstPayment = await Payment.create({
+        peopleId: dataPeople.id,
+        paymentMonth: new Date().getMonth() + 1,
+        value: '5.00',
+      });
+      console.log(firstPayment);
       return { ...dataPeople, ...addRess };
     } catch (error) {
       throw errorHandler(badRequest, error.message);
@@ -49,7 +55,6 @@ module.exports = {
       throw errorHandler(serverError, error.message);
     }
   },
-
   getPeopleByIdService: async (id) => {
     try {
       const people = await People.findByPk(id, {
@@ -97,6 +102,11 @@ module.exports = {
           fullName: {
             [Op.like]: `%${partName}%`, // https://github.com/tryber/Trybe-CheatSheets/tree/master/backend/sequelize/queries#operadores
           },
+          payments: {
+            paymentDate: {
+              [Op.gte]: new Date('2022-06-01'),
+            },
+          },
         },
         include: [
           {
@@ -106,6 +116,11 @@ module.exports = {
           {
             model: Payment,
             as: 'payments',
+            // where: {
+            //   paymentDate: {
+            //     []
+            //   }
+            // }
           },
         ],
       });
@@ -115,7 +130,6 @@ module.exports = {
       throw errorHandler(serverError, error.message);
     }
   },
-
   getDebtorPeoplesService: async () => {
     try {
       const peoples = await People.findAll({
@@ -123,6 +137,13 @@ module.exports = {
           {
             model: Address,
             as: 'address',
+          },
+          {
+            where: {
+              paymentDate: {},
+            },
+            model: Payment,
+            as: 'payments',
           },
         ],
       });
@@ -140,5 +161,10 @@ module.exports = {
     } catch (err) {
       throw errorHandler(notFound, err.message);
     }
+  },
+  updatePeopleService: async (id, personalData) => {
+    await People.update(personalData, {
+      where: { id },
+    });
   },
 };

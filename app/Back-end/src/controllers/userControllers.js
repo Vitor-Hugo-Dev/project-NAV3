@@ -6,9 +6,11 @@ module.exports = {
     try {
       const user = req.body;
       const tokenCreator = req.user;
-      const userCreator = await createUserService(user, tokenCreator);
+      const {
+        dataValues: { id, email, name, role },
+      } = await createUserService(user, tokenCreator);
 
-      return res.status(success).json(userCreator);
+      return res.status(success).json({ id, email, name, role });
     } catch (err) {
       return next(err);
     }
