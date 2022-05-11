@@ -11,6 +11,6 @@ module.exports = {
       role: validUser.role,
     });
 
-    return {token, ...validUser};
+    return { ...validUser, token };
   },
 };

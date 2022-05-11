@@ -12,10 +12,14 @@ const { success, noContent, badRequest } = require('../utils/statusCode');
 
 module.exports = {
   createPeopleController: async (req, res, next) => {
-    const { personalData, addressData } = req.body;
+    const { personalData, addressData, contactInfos } = req.body;
 
     try {
-      const newPeople = await createPeopleService(personalData, addressData);
+      const newPeople = await createPeopleService(
+        personalData,
+        addressData,
+        contactInfos,
+      );
 
       return res.status(success).json(newPeople);
     } catch (error) {
