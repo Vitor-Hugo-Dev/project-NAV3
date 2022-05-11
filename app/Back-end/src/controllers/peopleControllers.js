@@ -4,6 +4,7 @@ const {
   getPeopleByIdService,
   getPeopleByCpfService,
   getDebtorPeoplesService,
+  getNotDebtorPeoplesService,
   deletePeopleService,
   getPeoplesByPartNameService,
 } = require('../services/peopleServices');
@@ -26,7 +27,6 @@ module.exports = {
       return next(error);
     }
   },
-
   getPeoplesController: async (req, res, next) => {
     try {
       const peoples = await getPeoplesService();
@@ -36,25 +36,19 @@ module.exports = {
       return next(error);
     }
   },
-
   getPeopleByIdController: async (req, res, next) => {
     const { id } = req.params;
-
     try {
       const people = await getPeopleByIdService(id);
-
       return res.status(success).json(people);
     } catch (error) {
       return next(error);
     }
   },
-
   getPeopleByCpfController: async (req, res, next) => {
     const { cpf } = req.body;
-
     try {
       const people = await getPeopleByCpfService(cpf);
-
       return res.status(success).json(people);
     } catch (error) {
       return next(error);
@@ -63,7 +57,14 @@ module.exports = {
   getDebtorPeoplesController: async (req, res, next) => {
     try {
       const debtorPeoples = await getDebtorPeoplesService();
-
+      return res.status(success).json(debtorPeoples);
+    } catch (error) {
+      return next(error);
+    }
+  },
+  getNotDebtorPeoplesController: async (req, res, next) => {
+    try {
+      const debtorPeoples = await getNotDebtorPeoplesService();
       return res.status(success).json(debtorPeoples);
     } catch (error) {
       return next(error);
@@ -73,7 +74,6 @@ module.exports = {
     const { id } = req.params;
     try {
       await deletePeopleService(id);
-      console.log('deletou');
       return res.status(noContent).end();
     } catch (error) {
       return next(error);
