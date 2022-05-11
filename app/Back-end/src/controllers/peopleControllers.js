@@ -4,6 +4,7 @@ const {
   getPeopleByIdService,
   getPeopleByCpfService,
   getDebtorPeoplesService,
+  getNotDebtorPeoplesService,
   deletePeopleService,
   getPeoplesByPartNameService,
 } = require('../services/peopleServices');
@@ -56,6 +57,14 @@ module.exports = {
   getDebtorPeoplesController: async (req, res, next) => {
     try {
       const debtorPeoples = await getDebtorPeoplesService();
+      return res.status(success).json(debtorPeoples);
+    } catch (error) {
+      return next(error);
+    }
+  },
+  getNotDebtorPeoplesController: async (req, res, next) => {
+    try {
+      const debtorPeoples = await getNotDebtorPeoplesService();
       return res.status(success).json(debtorPeoples);
     } catch (error) {
       return next(error);

@@ -1,4 +1,9 @@
-const { People, Address, Payment } = require('../database/models');
+const {
+  People,
+  Address,
+  Payment,
+  ContactInfos,
+} = require('../database/models');
 const { peopleValidation } = require('../utils/peopleValidation');
 const errorHandler = require('../utils/errorHandler');
 const { badRequest, serverError, notFound } = require('../utils/statusCode');
@@ -13,25 +18,20 @@ const sequelize = new Sequelize(config.development);
 module.exports = {
   createPeopleService: async (personalData, addressData, contactInfo) => {
     const { error } = await peopleValidation(personalData); // valida os dados pessoais
-
     if (error) throw errorHandler(badRequest, error.message);
-
     const transaction = {
       transaction: await sequelize.transaction(),
     }; // inicia uma transação
-
     try {
       const { dataValues: dataPeople } = await People.create(
         personalData,
         transaction,
       );
       if (!dataPeople) throw errorHandler(serverError, 'Erro ao criar pessoa');
-
       const contact = await createContactInfos(
         { ...contactInfo, peopleId: dataPeople.id },
         transaction,
       );
-
       const addRess = await createAddress(
         {
           ...addressData,
@@ -47,7 +47,6 @@ module.exports = {
         },
         transaction,
       );
-
       await transaction.transaction.commit(); // commita a transação
       return { ...dataPeople, ...addRess, ...contact };
     } catch (error) {
@@ -55,7 +54,6 @@ module.exports = {
       throw errorHandler(badRequest, error.message);
     }
   },
-
   getPeoplesService: async () => {
     try {
       const peoples = await People.findAll({
@@ -68,9 +66,12 @@ module.exports = {
             model: Payment,
             as: 'payments',
           },
+          {
+            model: ContactInfos,
+            as: 'contacts',
+          },
         ],
       });
-
       return peoples;
     } catch (error) {
       throw errorHandler(serverError, error.message);
@@ -88,10 +89,13 @@ module.exports = {
             model: Payment,
             as: 'payments',
           },
+          {
+            model: ContactInfos,
+            as: 'contacts',
+          },
         ],
       });
       if (!people) throw errorHandler(notFound, 'Pessoa não encontrada');
-
       return people;
     } catch (error) {
       throw errorHandler(error.status, error.message);
@@ -107,10 +111,13 @@ module.exports = {
             model: Payment,
             as: 'payments',
           },
+          {
+            model: ContactInfos,
+            as: 'contacts',
+          },
         ],
       });
       if (!people) throw errorHandler(notFound, 'Pessoa não encontrada');
-      console.log(JSON.stringify(people.dataValues.payments[0]));
       return people;
     } catch (error) {
       throw errorHandler(error.status, error.message);
@@ -123,11 +130,6 @@ module.exports = {
           fullName: {
             [Op.like]: `%${partName}%`, // https://github.com/tryber/Trybe-CheatSheets/tree/master/backend/sequelize/queries#operadores
           },
-          payments: {
-            paymentDate: {
-              [Op.gte]: new Date('2022-06-01'),
-            },
-          },
         },
         include: [
           {
@@ -137,11 +139,10 @@ module.exports = {
           {
             model: Payment,
             as: 'payments',
-            // where: {
-            //   paymentDate: {
-            //     []
-            //   }
-            // }
+          },
+          {
+            model: ContactInfos,
+            as: 'contacts',
           },
         ],
       });
@@ -154,21 +155,54 @@ module.exports = {
   getDebtorPeoplesService: async () => {
     try {
       const peoples = await People.findAll({
+        where: {
+          paymentMonth: {
+            [Op.lt]: new Date().getMonth() + 1,
+          },
+        },
         include: [
           {
             model: Address,
             as: 'address',
           },
           {
-            where: {
-              paymentDate: {},
-            },
             model: Payment,
             as: 'payments',
           },
+          {
+            model: ContactInfos,
+            as: 'contacts',
+          },
         ],
       });
-
+      return peoples;
+    } catch (error) {
+      throw errorHandler(serverError, error.message);
+    }
+  },
+  getNotDebtorPeoplesService: async () => {
+    try {
+      const peoples = await People.findAll({
+        where: {
+          paymentMonth: {
+            [Op.gte]: new Date().getMonth() + 1,
+          },
+        },
+        include: [
+          {
+            model: Address,
+            as: 'address',
+          },
+          {
+            model: Payment,
+            as: 'payments',
+          },
+          {
+            model: ContactInfos,
+            as: 'contacts',
+          },
+        ],
+      });
       return peoples;
     } catch (error) {
       throw errorHandler(serverError, error.message);
