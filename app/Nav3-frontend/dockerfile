@@ -10,4 +10,6 @@ EXPOSE 3000
 
 COPY . .
 
+RUN npm run build
+
 CMD ["node_modules/.bin/next", "start"]
