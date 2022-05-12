@@ -3,14 +3,61 @@ import styles from './styles.module.css';
 import regex from '../../regex/';
 
 export default function FormPeople() {
+  const formDefaultValues = {
+    birthDate: '',
+    cpf: '',
+    district: '',
+    email: '',
+    fullName: '',
+    neighborhood: '',
+    number: '',
+    phoneNumber: '',
+    street: '',
+    complement: '',
+  };
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm();
+    reset,
+  } = useForm(formDefaultValues);
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const payload = {
+      personalData: {
+        fullName: data.fullName,
+        cpf: data.cpf,
+        birthDate: data.birthDate,
+      },
+      contactInfos: {
+        phoneNumber: data.phoneNumber,
+        email: data.email,
+      },
+      addressData: {
+        district: data.district,
+        street: data.street,
+        number: data.number,
+        complement: data.complement,
+      },
+    }
+
+    try {
+      await fetch(`http://localhost:3001/people`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: localStorage.getItem('token'),
+        },
+        body: JSON.stringify(payload),
+      });
+
+      reset();
+      // if (response.ok) {
+      //   console.log('ok');
+      // }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return(
@@ -31,7 +78,7 @@ export default function FormPeople() {
           className={styles.input}
           type="text"
           name="cpf"
-          placeholder="CPF da pessoa"
+          placeholder="CPF da pessoa (xxx.xxx.xxx-xx)"
           {...register('cpf', { required: "Required", pattern: regex.cpf, minLength: 14 })}
         />
 
