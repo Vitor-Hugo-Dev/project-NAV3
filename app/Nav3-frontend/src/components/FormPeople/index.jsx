@@ -35,9 +35,10 @@ export default function FormPeople() {
       },
       addressData: {
         district: data.district,
+        neighborhood: data.neighborhood,
         street: data.street,
-        number: data.number,
         complement: data.complement,
+        number: data.number,
       },
     }
 
@@ -52,9 +53,6 @@ export default function FormPeople() {
       });
 
       reset();
-      // if (response.ok) {
-      //   console.log('ok');
-      // }
     } catch (error) {
       console.log(error);
     }
@@ -172,7 +170,11 @@ export default function FormPeople() {
           type="text"
           name="complement"
           placeholder="Complemento"
+          {...register('complement', { required: "Required", minLength: 1 })}
         />
+
+        {errors.complement && errors.complement.type === 'required' && <span className={styles.error}>Esse campo é obrigatório</span>}
+        {errors.complement && errors.complement.type === 'minLength' && <span className={styles.error}>Complemento inválido, digite o complemento</span>}
       </div>
 
       <button
