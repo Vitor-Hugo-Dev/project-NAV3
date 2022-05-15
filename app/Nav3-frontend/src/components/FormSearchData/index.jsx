@@ -4,7 +4,6 @@ import styles from './styles.module.css';
 
 export default function FormSearchData({
   className,
-  setPeopleData,
 }) {
   const [inputData, setInputData] = useState('');
   const [selectData, setSelectData] = useState('nome');
