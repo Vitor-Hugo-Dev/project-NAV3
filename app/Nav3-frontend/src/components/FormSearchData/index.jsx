@@ -35,6 +35,16 @@ export default function FormSearchData({
     }
   }, [inputData]);
 
+  const formatCpf = (value) => {
+    if (value.includes('.') || value.includes('-')) {
+      return value;
+    }
+
+    const cpf = value.replace(/[^\d]/g, "");
+  
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+  }
+
   const getData = async () => {
     if (selectData === 'cpf' && inputData.length < 11) {
       setErrorMessage('CPF inválido');
@@ -43,6 +53,36 @@ export default function FormSearchData({
       }, 4000);
       return setInputData('');
     }
+
+    const payload = {
+      role: '',
+      termo: '',
+    }
+
+    if (selectData === 'nome' || selectData === 'id') {
+      payload.role = selectData;
+      payload.termo = inputData;
+    }
+
+    if (selectData === 'cpf') {
+      payload.role = selectData;
+      payload.termo = formatCpf(inputData);
+    }
+
+    console.log(payload);
+
+    const response = await fetch('http://localhost:3001/role', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: localStorage.getItem('token'),
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+
+    console.log(data);
 
     // a requisição deve ser feita aqui
     // passando o selectData e o inputData para o body da request
