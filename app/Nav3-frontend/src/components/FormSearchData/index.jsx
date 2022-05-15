@@ -6,10 +6,11 @@ export default function FormSearchData({
   className,
 }) {
   const [inputData, setInputData] = useState('');
-  const [selectData, setSelectData] = useState('nome');
+  const [selectData, setSelectData] = useState('name');
   const [enableButton, setEnableButton] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [showResults, setShowResults] = useState(true);
+  const [results, setResults] = useState([]);
 
   useEffect(() => {
     const handleCpfOrName = () => {
@@ -59,7 +60,7 @@ export default function FormSearchData({
       termo: '',
     }
 
-    if (selectData === 'nome' || selectData === 'id') {
+    if (selectData === 'name' || selectData === 'id') {
       payload.role = selectData;
       payload.termo = inputData;
     }
@@ -69,9 +70,7 @@ export default function FormSearchData({
       payload.termo = formatCpf(inputData);
     }
 
-    console.log(payload);
-
-    const response = await fetch('http://localhost:3001/role', {
+    const response = await fetch('http://localhost:3001/people/role', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -81,12 +80,18 @@ export default function FormSearchData({
     });
 
     const data = await response.json();
-
     console.log(data);
 
-    // a requisição deve ser feita aqui
-    // passando o selectData e o inputData para o body da request
-    // setPeopleData vai receber os dados do usuario.
+    if (data.length >= 1) {
+      setResults(data);
+      setInputData('');
+      setSelectData('name');
+      return setShowResults(true);
+    }
+
+    setResults([data]);
+    setInputData('');
+    setSelectData('name');
   };
 
   return (
@@ -96,7 +101,7 @@ export default function FormSearchData({
           <label className={styles.labelSelect}>
             <span>Filtrar por:</span>
             <select className={styles.select} onChange={(e) => setSelectData(e.target.value)}>
-              <option className={styles.options} value="nome">NOME</option>
+              <option className={styles.options} value="name">NOME</option>
               <option className={styles.options} value="cpf">CPF</option>
               <option className={styles.options} value="id">ID</option>
             </select>
@@ -116,46 +121,17 @@ export default function FormSearchData({
 
       {showResults ? (
         <div className={styles.containerResults}>
-          <button className={styles.containerUser} onClick={() => setShowResults(false)}>
-            <span className={styles.userName}>Nome: Claudio Cassimiro</span>
-            <span className={styles.cpf}>CPF: 704.543.044-20</span>
-            <span className={styles.userAndress}>Endereço: Ipojuca - Nossa Senhora do Ó, Rua 30, loteamento canoas</span>
-          </button>
-          <button className={styles.containerUser} onClick={() => setShowResults(false)}>
-            <span className={styles.userName}>Nome: Claudio Cassimiro</span>
-            <span className={styles.cpf}>CPF: 704.543.044-20</span>
-            <span className={styles.userAndress}>Endereço: Ipojuca - Nossa Senhora do Ó, Rua 30, loteamento canoas</span>
-          </button>
-          <button className={styles.containerUser} onClick={() => setShowResults(false)}>
-            <span className={styles.userName}>Nome: Claudio Cassimiro</span>
-            <span className={styles.cpf}>CPF: 704.543.044-20</span>
-            <span className={styles.userAndress}>Endereço: Ipojuca - Nossa Senhora do Ó, Rua 30, loteamento canoas</span>
-          </button>
-          <button className={styles.containerUser} onClick={() => setShowResults(false)}>
-            <span className={styles.userName}>Nome: Claudio Cassimiro</span>
-            <span className={styles.cpf}>CPF: 704.543.044-20</span>
-            <span className={styles.userAndress}>Endereço: Ipojuca - Nossa Senhora do Ó, Rua 30, loteamento canoas</span>
-          </button>
-          <button className={styles.containerUser} onClick={() => setShowResults(false)}>
-            <span className={styles.userName}>Nome: Claudio Cassimiro</span>
-            <span className={styles.cpf}>CPF: 704.543.044-20</span>
-            <span className={styles.userAndress}>Endereço: Ipojuca - Nossa Senhora do Ó, Rua 30, loteamento canoas</span>
-          </button>
-          <button className={styles.containerUser} onClick={() => setShowResults(false)}>
-            <span className={styles.userName}>Nome: Claudio Cassimiro</span>
-            <span className={styles.cpf}>CPF: 704.543.044-20</span>
-            <span className={styles.userAndress}>Endereço: Ipojuca - Nossa Senhora do Ó, Rua 30, loteamento canoas</span>
-          </button>
-          <button className={styles.containerUser} onClick={() => setShowResults(false)}>
-            <span className={styles.userName}>Nome: Claudio Cassimiro</span>
-            <span className={styles.cpf}>CPF: 704.543.044-20</span>
-            <span className={styles.userAndress}>Endereço: Ipojuca - Nossa Senhora do Ó, Rua 30, loteamento canoas</span>
-          </button>
-          <button className={styles.containerUser} onClick={() => setShowResults(false)}>
-            <span className={styles.userName}>Nome: Claudio Cassimiro</span>
-            <span className={styles.cpf}>CPF: 704.543.044-20</span>
-            <span className={styles.userAndress}>Endereço: Ipojuca - Nossa Senhora do Ó, Rua 30, loteamento canoas</span>
-          </button>
+          {results.length > 1 && results.map((item) => {
+            return (
+              <button className={styles.containerUser} onClick={() => setShowResults(false)}>
+                <span className={styles.userName}>{`Nome: ${item.fullName}`}</span>
+                <span className={styles.cpf}>{`CPF: ${item.cpf}`}</span>
+                <span className={styles.userAndress}>{`
+                  Endereço: ${item.address.district} - ${item.address.neighborhood}, ${item.address.street}, casa: ${item.address.Number}.
+                `}</span>
+              </button>
+            )
+          })}
         </div>
       ) : (
         <div className={styles.containerUserInfos}>
@@ -164,7 +140,7 @@ export default function FormSearchData({
           </button>
           <h1>Informações do usuario aqui</h1>
         </div>
-      ) }
+      )}
 
       <button
         type="button"
