@@ -22,7 +22,11 @@ module.exports = {
       district: { type: Sequelize.STRING, allowNull: false },
       street: { type: Sequelize.STRING, allowNull: false },
       number: { type: Sequelize.INTEGER, allowNull: false },
-      complement: { type: Sequelize.STRING, allowNull: false },
+      complement: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: '',
+      },
     });
   },
   down: async (queryInterface, _Sequelize) => {

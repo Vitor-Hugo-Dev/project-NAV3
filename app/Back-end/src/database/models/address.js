@@ -15,7 +15,11 @@ module.exports = (sequelize, DataTypes) => {
       district: { type: DataTypes.STRING, allowNull: false },
       street: { type: DataTypes.STRING, allowNull: false },
       number: { type: DataTypes.INTEGER, allowNull: false },
-      complement: { type: DataTypes.STRING, allowNull: false },
+      complement: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: '',
+      },
     },
     {
       tableName: 'addresses',
