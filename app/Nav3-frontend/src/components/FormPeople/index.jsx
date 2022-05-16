@@ -3,14 +3,59 @@ import styles from './styles.module.css';
 import regex from '../../regex/';
 
 export default function FormPeople() {
+  const formDefaultValues = {
+    birthDate: '',
+    cpf: '',
+    district: '',
+    email: '',
+    fullName: '',
+    neighborhood: '',
+    number: '',
+    phoneNumber: '',
+    street: '',
+    complement: '',
+  };
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm();
+    reset,
+  } = useForm(formDefaultValues);
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const payload = {
+      personalData: {
+        fullName: data.fullName,
+        cpf: data.cpf,
+        birthDate: data.birthDate,
+      },
+      contactInfos: {
+        phoneNumber: data.phoneNumber,
+        email: data.email,
+      },
+      addressData: {
+        district: data.district,
+        neighborhood: data.neighborhood,
+        street: data.street,
+        complement: data.complement,
+        number: data.number,
+      },
+    }
+
+    try {
+      await fetch(`http://localhost:3001/people`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: localStorage.getItem('token'),
+        },
+        body: JSON.stringify(payload),
+      });
+
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return(
@@ -31,7 +76,7 @@ export default function FormPeople() {
           className={styles.input}
           type="text"
           name="cpf"
-          placeholder="CPF da pessoa"
+          placeholder="CPF da pessoa (xxx.xxx.xxx-xx)"
           {...register('cpf', { required: "Required", pattern: regex.cpf, minLength: 14 })}
         />
 
@@ -125,7 +170,11 @@ export default function FormPeople() {
           type="text"
           name="complement"
           placeholder="Complemento"
+          {...register('complement', { required: "Required", minLength: 1 })}
         />
+
+        {errors.complement && errors.complement.type === 'required' && <span className={styles.error}>Esse campo é obrigatório</span>}
+        {errors.complement && errors.complement.type === 'minLength' && <span className={styles.error}>Complemento inválido, digite o complemento</span>}
       </div>
 
       <button

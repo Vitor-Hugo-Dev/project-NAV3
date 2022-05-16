@@ -21,7 +21,7 @@ routes.get('/not-debtor', validateJWT, getNotDebtorPeoplesController);
 
 routes.get('/cpf', validateJWT, getPeopleByCpfController);
 
-routes.get('/role', validateJWT, dynamicGetPeoplesController);
+routes.post('/role', validateJWT, dynamicGetPeoplesController);
 
 routes.get('/:id', validateJWT, getPeopleByIdController);
 

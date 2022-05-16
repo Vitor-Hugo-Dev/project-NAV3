@@ -20,6 +20,7 @@ module.exports = {
         },
       },
       district: { type: Sequelize.STRING, allowNull: false },
+      neighborhood: { type: Sequelize.STRING, allowNull: false },
       street: { type: Sequelize.STRING, allowNull: false },
       number: { type: Sequelize.INTEGER, allowNull: false },
       complement: {

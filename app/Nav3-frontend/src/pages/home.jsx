@@ -7,14 +7,15 @@ import DefaultModal from '../components/DefaultModal';
 import styles from '../styles/Home.module.css';
 import FormSearchData from '../components/FormSearchData';
 import FormPeople from '../components/FormPeople';
+import FormServices from '../components/FormServices';
 
 export default function Home() {
-  const modal = useDialogState();
   const formModal = useDialogState();
-  const [peopleData, setPeopleData] = useState({});
+  const modalPeople = useDialogState();
+  const modalServices = useDialogState();
 
   const handleModal = () => {
-    modal.show();
+    modalPeople.show();
   };
   // push to next page
   return (
@@ -41,6 +42,13 @@ export default function Home() {
           >
             Cadastrar uma Pessoa
           </button>
+          <button
+            type="button"
+            className={styles.button}
+            onClick={() => modalServices.show()}
+          >
+            Cadastrar um Serviço
+          </button>
         </div>
       </main>
       {formModal.visible && (
@@ -48,16 +56,14 @@ export default function Home() {
           <FormPeople />
         </DefaultModal>
       )}
-      {modal.visible && (
-        <DefaultModal modal={modal} windowTitle="Faça sua busca">
-          <>
-            <FormSearchData setPeopleData={setPeopleData} />
-            {peopleData.name && (
-              <div className={styles.peopleInfoCard}>
-                {/* Aqui vou imprimir os dados do usuario encontrado */}
-              </div>
-            )}
-          </>
+      {modalPeople.visible && (
+        <DefaultModal modal={modalPeople} windowTitle="Faça sua busca">
+          <FormSearchData />
+        </DefaultModal>
+      )}
+      {modalServices.visible && (
+        <DefaultModal modal={modalServices} windowTitle="Cadastre um Serviço">
+          <FormServices />
         </DefaultModal>
       )}
     </div>

@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
       },
       district: { type: DataTypes.STRING, allowNull: false },
+      neighborhood: { type: DataTypes.STRING, allowNull: false },
       street: { type: DataTypes.STRING, allowNull: false },
       number: { type: DataTypes.INTEGER, allowNull: false },
       complement: {

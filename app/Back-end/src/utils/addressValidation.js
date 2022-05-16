@@ -4,6 +4,7 @@ const { badRequest } = require('./statusCode');
 
 const scheema = Joi.object({
   district: Joi.string().required(),
+  neighborhood: Joi.string().required(),
   street: Joi.string().required(),
   number: Joi.number().required(),
   peopleId: Joi.number().required(),
