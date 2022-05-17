@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       tableName: 'services',
+      timestamps: false,
     },
   );
   Service.associate = (models) => {

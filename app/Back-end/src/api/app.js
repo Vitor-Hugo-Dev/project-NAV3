@@ -5,6 +5,7 @@ const paymentRoutes = require('../routes/paymentRoutes');
 const userRoutes = require('../routes/userRoutes');
 const errorMiddleware = require('../middlewares/errorMiddleware');
 const loginRoutes = require('../routes/loginRoutes');
+const serviceRoutes = require('../routes/serviceRoutes');
 const cors = require('cors');
 const app = express();
 
@@ -18,6 +19,7 @@ app.use('/people', peopleRoutes);
 app.use('/payment', paymentRoutes);
 app.use('/user', userRoutes);
 app.use('/login', loginRoutes);
+app.use('/service', serviceRoutes);
 
 app.use(errorMiddleware);
 
