@@ -4,13 +4,13 @@ module.exports = {
     await queryInterface.createTable(
       'services',
       {
-        id: {
+        sku: {
           allowNull: false,
-          autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        servicos: {
+        serviceName: {
+          allowNull: false,
           type: Sequelize.STRING,
         },
       },

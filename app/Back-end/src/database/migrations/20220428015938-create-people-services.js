@@ -4,6 +4,11 @@ module.exports = {
     await queryInterface.createTable(
       'peopleServices',
       {
+        description: {
+          type: Sequelize.STRING,
+          allowNull: false,
+          defaultValue: '',
+        },
         serviceId: {
           primaryKey: true,
           allowNull: false,
@@ -12,7 +17,7 @@ module.exports = {
           onDelete: 'CASCADE',
           references: {
             model: 'services',
-            key: 'id',
+            key: 'sku',
           },
         },
         peopleId: {
