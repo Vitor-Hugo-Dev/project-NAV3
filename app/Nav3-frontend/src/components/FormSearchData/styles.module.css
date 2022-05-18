@@ -84,6 +84,101 @@
   font-size: 1rem;
 }
 
+.containerUserInfos {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.backToResults {
+  width: 100%;
+  height: 3rem;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  background-color: var(--yellow);
+  margin-bottom: 1rem;
+}
+
+.containerButtons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  height: 8rem;
+}
+
+.findServices {
+  width: 48%;
+  height: 3rem;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  color: var(--white);
+  background-color: var(--primary);
+}
+
+.addServices {
+  width: 48%;
+  height: 3rem;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  color: var(--white);
+  background-color: var(--dark-blue);
+}
+
+.addPayment {
+  width: 48%;
+  height: 3rem;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  background-color: var(--green-2);
+}
+
+.deletePeople {
+  width: 48%;
+  height: 3rem;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  color: var(--white);
+  background-color: var(--red);
+}
+
+.userInfos {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5rem;
+}
+
+.fullName {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.userCpf {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.address {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.userEmail {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.userPhone {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
 .button {
   margin-top: 1rem;
   height: 6rem;
