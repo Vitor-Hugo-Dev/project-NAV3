@@ -11,6 +11,8 @@ export default function FormSearchData({
   const [errorMessage, setErrorMessage] = useState('');
   const [showResults, setShowResults] = useState(true);
   const [results, setResults] = useState([]);
+  const [firstRender, setFirstRender] = useState(true);
+  const [userInfos, setUserInfos] = useState({});
 
   useEffect(() => {
     const handleCpfOrName = () => {
@@ -82,16 +84,16 @@ export default function FormSearchData({
     const data = await response.json();
     console.log(data);
 
-    if (data.length >= 1) {
-      setResults(data);
-      setInputData('');
-      setSelectData('name');
-      return setShowResults(true);
-    }
-
-    setResults([data]);
+    setResults(data);
     setInputData('');
     setSelectData('name');
+    setFirstRender(false);
+    setShowResults(true);
+  };
+
+  const setUserData = (data) => {
+    setUserInfos(data);
+    setShowResults(false);
   };
 
   return (
@@ -121,24 +123,52 @@ export default function FormSearchData({
 
       {showResults ? (
         <div className={styles.containerResults}>
-          {results.length > 1 && results.map((item) => {
+          {results.length >= 1 && results.map((item) => {
             return (
-              <button className={styles.containerUser} onClick={() => setShowResults(false)}>
+              <button key={item.cpf} className={styles.containerUser} onClick={() => setUserData(item)}>
                 <span className={styles.userName}>{`Nome: ${item.fullName}`}</span>
                 <span className={styles.cpf}>{`CPF: ${item.cpf}`}</span>
                 <span className={styles.userAndress}>{`
-                  Endereço: ${item.address.district} - ${item.address.neighborhood}, ${item.address.street}, casa: ${item.address.Number}.
-                `}</span>
+                  Endereço: ${item.address.district} - ${item.address.neighborhood}, ${item.address.street}, casa: ${item.address.number}.
+                `}
+                </span>
               </button>
             )
           })}
+
+          {results.length === 0 && !firstRender && (
+            <h3 className={styles.noResults}>Nenhum resultado encontrado</h3>
+          )}
         </div>
       ) : (
         <div className={styles.containerUserInfos}>
           <button className={styles.backToResults} onClick={() => setShowResults(true)}>
             Voltar
           </button>
-          <h1>Informações do usuario aqui</h1>
+          <div className={styles.containerButtons}>
+            <button className={styles.findServices}>
+              Listar Serviços
+            </button>
+            <button className={styles.addServices}>
+              Adicionar Serviço
+            </button>
+            <button className={styles.addPayment}>
+              Adicionar Pagamento
+            </button>
+            <button className={styles.deletePeople}>
+              Deletar Pessoa
+            </button>
+          </div>
+          <div className={styles.userInfos}>
+              <span className={styles.fullName}>{`Nome: ${userInfos.fullName}`}</span>
+              <span className={styles.userCpf}>{`CPF: ${userInfos.cpf}`}</span>
+              <span className={styles.address}>{`
+                  Endereço: ${userInfos.address.district} - ${userInfos.address.neighborhood}, ${userInfos.address.street}, casa: ${userInfos.address.number}
+                `}
+                </span>
+              <span className={styles.userEmail}>{`Email: ${userInfos.contacts.email}`}</span>
+              <span className={styles.userPhone}>{`Telefone: ${userInfos.contacts.phoneNumber}`}</span>
+          </div>
         </div>
       )}
 
