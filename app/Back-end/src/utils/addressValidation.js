@@ -7,8 +7,8 @@ const scheema = Joi.object({
   neighborhood: Joi.string().required(),
   street: Joi.string().required(),
   number: Joi.number().required(),
-  complement: Joi.string().min(10).required(),
   peopleId: Joi.number().required(),
+  complement: Joi.string(),
 });
 
 module.exports = {
