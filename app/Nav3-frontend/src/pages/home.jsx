@@ -49,6 +49,13 @@ export default function Home() {
           >
             Cadastrar um Serviço
           </button>
+          <button
+            type="button"
+            className={styles.button}
+            onClick={() => modalServices.show()}
+          >
+            Pesquisar um Serviço
+          </button>
         </div>
       </main>
       {formModal.visible && (
