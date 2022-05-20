@@ -56,7 +56,10 @@
 
 .optionsCard {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  flex-wrap: wrap;
+  row-gap: 2rem;
+  column-gap: 2rem;
   width: 100%;
   height: 10rem;
 }
@@ -68,6 +71,12 @@
   outline: none;
   font-size: 1.6rem;
   border-radius: 0.5rem;
+  transition: all 200ms ease-in-out; 
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: var(--gray-4);
 }
 
 @media (min-width: 412px) {
@@ -77,5 +86,11 @@
 
   .openModalButton {
     width: 60%;
+  }
+}
+
+@media print {
+  .container {
+    display: none;
   }
 }

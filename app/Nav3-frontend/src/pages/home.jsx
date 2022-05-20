@@ -8,11 +8,13 @@ import styles from '../styles/Home.module.css';
 import FormSearchData from '../components/FormSearchData';
 import FormPeople from '../components/FormPeople';
 import FormServices from '../components/FormServices';
+import FormSearchService from '../components/FormSearchService';
 
 export default function Home() {
   const formModal = useDialogState();
   const modalPeople = useDialogState();
   const modalServices = useDialogState();
+  const modalGetServices = useDialogState();
 
   const handleModal = () => {
     modalPeople.show();
@@ -49,6 +51,13 @@ export default function Home() {
           >
             Cadastrar um Serviço
           </button>
+          <button
+            type="button"
+            className={styles.button}
+            onClick={() => modalGetServices.show()}
+          >
+            Pesquisar um Serviço
+          </button>
         </div>
       </main>
       {formModal.visible && (
@@ -64,6 +73,11 @@ export default function Home() {
       {modalServices.visible && (
         <DefaultModal modal={modalServices} windowTitle="Cadastre um Serviço">
           <FormServices />
+        </DefaultModal>
+      )}
+      {modalGetServices.visible && (
+        <DefaultModal modal={modalGetServices} windowTitle="Pesquisar um Serviço">
+          <FormSearchService />
         </DefaultModal>
       )}
     </div>

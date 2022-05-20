@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 
 import styles from './styles.module.css';
 
+import PeopleCredential from '../PeopleCredential';
+
 export default function FormSearchData({
   className,
 }) {
@@ -13,6 +15,7 @@ export default function FormSearchData({
   const [results, setResults] = useState([]);
   const [firstRender, setFirstRender] = useState(true);
   const [userInfos, setUserInfos] = useState({});
+  const [showUserCredentials, setShowUserCredentials] = useState(true);
 
   useEffect(() => {
     const handleCpfOrName = () => {
@@ -24,7 +27,7 @@ export default function FormSearchData({
     }
 
     const handleId = () => {
-      if (inputData.length >= 1) {
+      if (inputData.length > 0) {
         setEnableButton(false);
       } else {
         setEnableButton(true);
@@ -70,7 +73,7 @@ export default function FormSearchData({
     if (selectData === 'cpf') {
       payload.role = selectData;
       payload.termo = formatCpf(inputData);
-    }
+    }-1
 
     const response = await fetch('http://localhost:3001/people/role', {
       method: 'POST',
@@ -82,9 +85,15 @@ export default function FormSearchData({
     });
 
     const data = await response.json();
-    console.log(data);
 
-    setResults(data);
+    if (payload.role === 'cpf' || payload.role === 'id') {
+      const auxArr = [];
+      auxArr.push(data);
+      setResults(auxArr);
+    } else {
+      setResults(data);
+    }
+
     setInputData('');
     setSelectData('name');
     setFirstRender(false);
@@ -96,7 +105,7 @@ export default function FormSearchData({
     setShowResults(false);
   };
 
-  return (
+  return showUserCredentials ? (
     <div className={styles.wrapper}>
       <form className={className ? className : styles.form}>
         <div className={styles.container}>
@@ -105,7 +114,6 @@ export default function FormSearchData({
             <select className={styles.select} onChange={(e) => setSelectData(e.target.value)}>
               <option className={styles.options} value="name">NOME</option>
               <option className={styles.options} value="cpf">CPF</option>
-              <option className={styles.options} value="id">ID</option>
             </select>
           </label>
 
@@ -145,6 +153,9 @@ export default function FormSearchData({
           <button className={styles.backToResults} onClick={() => setShowResults(true)}>
             Voltar
           </button>
+          <button className={styles.printUserCredential} onClick={() => setShowUserCredentials(false)}>
+            Imprimir Carteirinha
+          </button>
           <div className={styles.containerButtons}>
             <button className={styles.findServices}>
               Listar Serviços
@@ -181,5 +192,7 @@ export default function FormSearchData({
         Buscar
       </button>
     </div>
+  ) : (
+    <PeopleCredential userInfos={userInfos} setShowUserCredentials={setShowUserCredentials}/>
   );
 }
