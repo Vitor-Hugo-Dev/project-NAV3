@@ -17,7 +17,7 @@ export default function FormServices() {
   const onSubmit = async (data) => {
     const payload = {
       sku: Number(data.sku),
-			servico: data.servico
+			serviceName: data.servico
     }
 
     try {
