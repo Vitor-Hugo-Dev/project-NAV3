@@ -88,3 +88,9 @@
     width: 60%;
   }
 }
+
+@media print {
+  .container {
+    display: none;
+  }
+}

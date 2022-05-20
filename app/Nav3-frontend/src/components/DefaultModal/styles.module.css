@@ -109,3 +109,17 @@
     height: 67rem;
   }
 }
+
+@media print {
+  .windowTitle {
+    display: none;
+  }
+
+  .buttonHide {
+    display: none;
+  }
+
+  .headline {
+    display: none;
+  }
+}
