@@ -1,14 +1,15 @@
-import React from "react";
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Login.module.css";
-import { useState, useEffect, useRef } from "react";
-import logo from "../../public/logo.png";
+import React from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
+import styles from '../styles/Login.module.css';
+import { useState, useEffect, useRef } from 'react';
+import logo from '../../public/logo.png';
 import validationEmail from '../utils/validationEmail';
+import globalUrl from '../utils/urlApi';
 
 export default function Login() {
-  const [inputEmail, setInputEmail] = useState("");
-  const [inputPassword, setInputPassword] = useState("");
+  const [inputEmail, setInputEmail] = useState('');
+  const [inputPassword, setInputPassword] = useState('');
   const [enableButton, setEnableButton] = useState(true);
   const [errorMessage, setErrorMessage] = useState(``);
   const emailInput = useRef(null);
@@ -37,10 +38,10 @@ export default function Login() {
     };
 
     try {
-      const response = await fetch(`http://localhost:3001/login`, {
-        method: "POST",
+      const response = await fetch(`${globalUrl}:3001/login`, {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
       });
@@ -51,9 +52,9 @@ export default function Login() {
       }
 
       const { token } = data;
-      window.localStorage.setItem("token", token);
+      window.localStorage.setItem('token', token);
 
-      window.location.href = "/home";
+      window.location.href = '/home';
     } catch (error) {
       console.log(error);
     }
